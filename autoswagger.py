@@ -555,8 +555,8 @@ def send_request(method, base_url_no_path, full_path, parameters, value_mapping,
     substituted_path = substitute_path_parameters(full_path, parameters, value_mapping)
     query_string = generate_query_string(parameters, value_mapping)
 
-    if not substituted_path.startswith('/'):
-        substituted_path = '/' + substituted_path
+    if substituted_path.startswith('/') and ':' in substituted_path:
+        substituted_path = substituted_path[1:]
 
     parsed_path = urlparse(substituted_path)
     if parsed_path.scheme in ['http', 'https']:
